@@ -1,0 +1,37 @@
+{
+    "source": {
+        "type": "mysql",
+        "config": {
+            "host_port": "0.0.0.0:your-port",
+            "username": "your-user",
+            "password": "your-pass",
+            "database": "employees",
+            "service_name": "employees_source",
+            "data_profiler_enabled": "false",
+            "table_filter_pattern": {
+                "excludes": [
+                    "[\\w]*event_vw.*"
+                ]
+            },
+            "schema_filter_pattern": {
+                "excludes": [
+                    "mysql.*",
+                    "information_schema.*",
+                    "performance_schema.*",
+                    "sys.*"
+                ]
+            }
+        }
+    },
+    "sink": {
+        "type": "metadata-rest",
+        "config": {}
+    },
+    "metadata_server": {
+        "type": "metadata-server",
+        "config": {
+            "api_endpoint": "http://localhost:8585/api",
+            "auth_provider_type": "no-auth"
+        }
+    }
+}

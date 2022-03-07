@@ -20,3 +20,10 @@ build_database:
 	 -e MYSQL_ROOT_PASSWORD=$(DB_PASSWORD) \
 	 -p $(DB_PORT):3306 \
 	 -d mysql
+
+build_connector:
+	cd catalog
+	cp mysql-example.json mysql-connector.json
+	sed -i 's/your-port/$(DB_PORT)/g' mysql-connector.json
+	sed -i 's/your-user/$(DB_USER)/g' mysql-connector.json
+	sed -i 's/your-pass/$(DB_PASSWORD)/g' mysql-connector.json

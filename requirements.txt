@@ -1,7 +1,8 @@
-arrow==1.2.2
-Jinja2==3.0.3
-jinja2-time==0.2.0
-make==0.1.6.post2
-MarkupSafe==2.1.0
-python-dateutil==2.8.2
-six==1.16.0
+arrow
+Jinja2
+jinja2-time
+make
+MarkupSafe
+python-dateutil
+six
+pymysql

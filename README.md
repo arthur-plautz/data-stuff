@@ -58,6 +58,11 @@ Install Ingestion Deps:
 pip install 'openmetadata-ingestion[data-profiler]'
 ```
 
+Build Connector File with Secrets:
+```bash
+make build_mysql_connector
+```
+
 Start OpenMetadata and Ingest:
 ```bash
 cd catalog

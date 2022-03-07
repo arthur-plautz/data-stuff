@@ -21,7 +21,7 @@ build_database:
 	 -p $(DB_PORT):3306 \
 	 -d mysql
 
-build_connector:
+build_mysql_connector:
 	cd catalog
 	cp mysql-example.json mysql-connector.json
 	sed -i 's/your-port/$(DB_PORT)/g' mysql-connector.json

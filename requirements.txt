@@ -6,3 +6,4 @@ MarkupSafe
 python-dateutil
 six
 pymysql
+kafka-python

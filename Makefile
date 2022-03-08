@@ -44,3 +44,11 @@ run_airflow:
 stop_airflow:
 	cd airflow
 	docker-compose stop
+
+run_kafka:
+	cd kafka
+	docker-compose up -d
+
+stop_kafka:
+	cd kafka
+	docker-compose stop

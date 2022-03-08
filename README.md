@@ -12,8 +12,11 @@ pip install -r requirements.txt
 
 Create a .env file:
 ```bash
-export SOURCE_USER=your-db-user
-export SOURCE_PASSWORD=your-db-password
+export MYSQL_SOURCE_USER=your-db-user
+export MYSQL_SOURCE_PASSWORD=your-db-password
+
+export POSTGRES_SOURCE_USER=your-db-user
+export POSTGRES_SOURCE_PASSWORD=your-db-password
 
 export DW_USER=your-db-user
 export DW_PASSWORD=your-db-password
@@ -24,7 +27,7 @@ Source config file:
 source conf.sh
 ```
 
-### Source Database
+### MySQL Source Database
 
 Setup mysql CLI:
 ```bash
@@ -38,7 +41,19 @@ make build_mysql
 
 Load Source Database:
 ```bash
-make load_source
+make load_mysql_source
+```
+
+### Postgres Source Database
+
+Build Source Database:
+```bash
+make build_postgres
+```
+
+Load Source Database:
+```bash
+make load_postgres_source
 ```
 
 ### OpenMetadata

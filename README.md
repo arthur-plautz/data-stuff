@@ -12,8 +12,11 @@ pip install -r requirements.txt
 
 Create a .env file:
 ```bash
-export DB_USER=your-db-user
-export DB_PASSWORD=your-db-password
+export SOURCE_USER=your-db-user
+export SOURCE_PASSWORD=your-db-password
+
+export DW_USER=your-db-user
+export DW_PASSWORD=your-db-password
 ```
 
 Source config file:
@@ -28,9 +31,9 @@ Setup mysql CLI:
 make setup_mysql
 ```
 
-Build Database:
+Build Source Database:
 ```bash
-make build_database
+make build_mysql
 ```
 
 Load Source Database:

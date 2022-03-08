@@ -7,7 +7,7 @@
             "password": "your-pass",
             "database": "employees",
             "service_name": "employees_source",
-            "data_profiler_enabled": "false",
+            "data_profiler_enabled": "true",
             "table_filter_pattern": {
                 "excludes": [
                     "[\\w]*event_vw.*"

@@ -129,8 +129,8 @@ dmypy.json
 .pyre/
 
 # data
-db/source_data
-db/mysql_data
+database/source_data
+database/mysql_data
 
 # connectors
 catalog/mysql-connector.json

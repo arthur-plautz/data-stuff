@@ -1,12 +1,14 @@
 {
-    "name": "northwind-connector",
+    "name": "northwind_connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "database.hostname": "postgres",
-        "database.port": "your-port",
+        "database.port": "5432",
         "database.user": "your-user",
         "database.password": "your-pass",
         "database.dbname": "northwind",
-        "database.server.name": "northwind_cdc"
+        "database.server.name": "northwind_cdc",
+        "plugin.name": "pgoutput",
+        "tasks.max": "1"
     }
 }

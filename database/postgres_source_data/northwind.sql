@@ -15,6 +15,7 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+SET search_path TO public;
 
 ---
 --- drop tables
@@ -46,7 +47,7 @@ CREATE TABLE categories (
     description text,
     picture bytea
 );
-
+ALTER TABLE categories replica identity FULL;
 
 --
 -- Name: customer_customer_demo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -56,6 +57,7 @@ CREATE TABLE customer_customer_demo (
     customer_id bpchar NOT NULL,
     customer_type_id bpchar NOT NULL
 );
+ALTER TABLE customer_customer_demo replica identity FULL;
 
 
 --
@@ -66,6 +68,7 @@ CREATE TABLE customer_demographics (
     customer_type_id bpchar NOT NULL,
     customer_desc text
 );
+ALTER TABLE customer_demographics replica identity FULL;
 
 
 --
@@ -85,6 +88,7 @@ CREATE TABLE customers (
     phone character varying(24),
     fax character varying(24)
 );
+ALTER TABLE customers replica identity FULL;
 
 
 --
@@ -111,6 +115,7 @@ CREATE TABLE employees (
     reports_to smallint,
     photo_path character varying(255)
 );
+ALTER TABLE employees replica identity FULL;
 
 
 --
@@ -121,6 +126,7 @@ CREATE TABLE employee_territories (
     employee_id smallint NOT NULL,
     territory_id character varying(20) NOT NULL
 );
+ALTER TABLE employee_territories replica identity FULL;
 
 
 
@@ -136,6 +142,7 @@ CREATE TABLE order_details (
     quantity smallint NOT NULL,
     discount real NOT NULL
 );
+ALTER TABLE order_details replica identity FULL;
 
 
 --
@@ -158,6 +165,7 @@ CREATE TABLE orders (
     ship_postal_code character varying(10),
     ship_country character varying(15)
 );
+ALTER TABLE orders replica identity FULL;
 
 
 --
@@ -176,6 +184,7 @@ CREATE TABLE products (
     reorder_level smallint,
     discontinued integer NOT NULL
 );
+ALTER TABLE products replica identity FULL;
 
 
 --
@@ -186,6 +195,7 @@ CREATE TABLE region (
     region_id smallint NOT NULL,
     region_description bpchar NOT NULL
 );
+ALTER TABLE region replica identity FULL;
 
 
 --
@@ -197,6 +207,7 @@ CREATE TABLE shippers (
     company_name character varying(40) NOT NULL,
     phone character varying(24)
 );
+ALTER TABLE shippers replica identity FULL;
 
 
 
@@ -218,6 +229,7 @@ CREATE TABLE suppliers (
     fax character varying(24),
     homepage text
 );
+ALTER TABLE suppliers replica identity FULL;
 
 
 --
@@ -229,6 +241,7 @@ CREATE TABLE territories (
     territory_description bpchar NOT NULL,
     region_id smallint NOT NULL
 );
+ALTER TABLE territories replica identity FULL;
 
 
 --
@@ -241,6 +254,7 @@ CREATE TABLE us_states (
     state_abbr character varying(2),
     state_region character varying(50)
 );
+ALTER TABLE us_states replica identity FULL;
 
 
 --

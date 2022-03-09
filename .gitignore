@@ -134,4 +134,4 @@ database/mysql_data
 
 # connectors
 catalog/mysql-connector.json
-debezium/pg-connector.json
+debezium/postgres-connector.json

@@ -27,6 +27,7 @@ Source config file:
 source conf.sh
 ```
 
+## OpenMetadata 
 ### MySQL Source Database
 
 Setup mysql CLI:
@@ -34,29 +35,17 @@ Setup mysql CLI:
 make setup_mysql
 ```
 
-Build Source Database:
-```bash
-make build_mysql
-```
-
-Load Source Database:
+You can Build and Load Source Database:
 ```bash
 make load_mysql_source
 ```
 
-### Postgres Source Database
-
-Build Source Database:
+Or just build Source Database:
 ```bash
-make build_postgres
+make build_mysql
 ```
 
-Load Source Database:
-```bash
-make load_postgres_source
-```
-
-### OpenMetadata
+### OpenMetadata Runner
 
 [Here](https://docs.open-metadata.org/install/run-openmetadata) you can follow the full setup documentation.
 
@@ -76,9 +65,11 @@ Install Ingestion Deps:
 pip install 'openmetadata-ingestion[data-profiler]'
 ```
 
+### Configuration
+
 Build Connector File with Secrets:
 ```bash
-make build_mysql_connector
+make build_openmetadata_connector
 ```
 
 Start OpenMetadata and Ingest:
@@ -86,4 +77,42 @@ Start OpenMetadata and Ingest:
 cd catalog
 metadata docker --start
 metadata ingest -c ./mysql-connector.json
+```
+
+## Debezium
+
+### Postgres Source Database
+
+You can Build and Load Source Database:
+```bash
+make load_postgres_source
+```
+
+Or just build Source Database:
+```bash
+make build_postgres
+```
+
+### Debezium Runner
+
+To run debezium you can run:
+```bash
+make build_debezium
+```
+
+### Configuration
+
+Build Connector File with Secrets:
+```bash
+make build_debezium_connector
+```
+
+Create a Connector:
+```bash
+make create_debezium_connector
+```
+
+Create a Consumer:
+```bash
+make create_debezium_consumer
 ```

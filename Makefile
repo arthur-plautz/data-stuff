@@ -27,6 +27,7 @@ build_postgres:
 	 -d postgres postgres -c wal_level=logical -c max_replication_slots=1
 
 load_mysql_source: build_mysql
+	sleep 5
 	cd database
 	[ ! -d "mysql_source_data" ] && git clone https://github.com/datacharmer/test_db.git mysql_source_data
 	cd mysql_source_data

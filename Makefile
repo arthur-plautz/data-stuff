@@ -26,6 +26,17 @@ build_postgres:
 	 -p $(PG_SOURCE_PORT):5432 \
 	 -d postgres postgres -c wal_level=logical -c max_replication_slots=1
 
+build_dw:
+	docker rm -f data-warehouse || true
+	docker run --name data-warehouse --network=bridge \
+	 -e POSTGRES_USER=$(DW_USER) \
+	 -e POSTGRES_PASSWORD=$(DW_PASSWORD) \
+	 -e POSTGRES_DB="dw" \
+	 -e PGDATA=/var/lib/postgresql/data/pgdata \
+     -v $(PWD)/database/dw_data:/var/lib/postgresql/data \
+	 -p $(DW_PORT):5432 \
+	 -d postgres
+
 load_mysql_source: build_mysql
 	sleep 5
 	cd database
@@ -34,17 +45,9 @@ load_mysql_source: build_mysql
 	mysql --host=$(MYSQL_SOURCE_HOST) --port=$(MYSQL_SOURCE_PORT) -u$(MYSQL_SOURCE_USER) -p$(MYSQL_SOURCE_PASSWORD) < employees.sql
 
 load_postgres_source: build_postgres
+	sleep 5
 	cd database/postgres_source_data
 	PGPASSWORD=$(PG_SOURCE_PASSWORD) psql --host=$(PG_SOURCE_HOST) --port=$(PG_SOURCE_PORT) --user=$(PG_SOURCE_USER) northwind < northwind.sql
-
-build_dw:
-	docker rm -f pg-dw || true
-	docker run --name pg-dw --network=bridge \
-	 -e POSTGRES_USER=$(DW_USER) \
-	 -e POSTGRES_PASSWORD=$(DW_PASSWORD) \
-	 -e POSTGRES_DB="pg_dw" \
-	 -p $(DW_PORT):5432 \
-	 -d postgres
 
 build_openmetadata_connector:
 	cd catalog
@@ -53,33 +56,52 @@ build_openmetadata_connector:
 	sed -i 's/your-user/$(MYSQL_SOURCE_USER)/g' mysql-connector.json
 	sed -i 's/your-pass/$(MYSQL_SOURCE_PASSWORD)/g' mysql-connector.json
 
-build_debezium_connector:
+build_debezium_postgres_connector:
 	cd debezium
-	cp pg-connector-example.json pg-connector.json
-	sed -i 's/your-user/$(PG_SOURCE_USER)/g' pg-connector.json
-	sed -i 's/your-pass/$(PG_SOURCE_PASSWORD)/g' pg-connector.json
+	cp postgres-example.json postgres-connector.json
+	sed -i 's/your-user/$(PG_SOURCE_USER)/g' postgres-connector.json
+	sed -i 's/your-pass/$(PG_SOURCE_PASSWORD)/g' postgres-connector.json
+	sed -i 's/your-host/$(LOCAL_IP)/g' postgres-connector.json
+	sed -i 's/your-port/$(PG_SOURCE_PORT)/g' postgres-connector.json
+
+build_debezium_dw_connector:
+	cd debezium
+	cp dw-example.json dw-connector.json
+	sed -i 's/your-user/$(DW_USER)/g' dw-connector.json
+	sed -i 's/your-pass/$(DW_PASSWORD)/g' dw-connector.json
+	sed -i 's/your-host/$(LOCAL_IP)/g' dw-connector.json
+	sed -i 's/your-port/$(DW_PORT)/g' dw-connector.json
 
 build_kafka:
 	cd debezium
 	docker-compose up -d
 
 build_debezium: build_kafka
+	docker build -t debezium-local debezium
 	docker rm -f debezium || true
-	docker run --name debezium --link pg-northwind:postgres \
+	docker run --name debezium --network=bridge \
 	 -p 8083:8083 \
 	 -e BOOTSTRAP_SERVERS=$(LOCAL_IP):29092 \
 	 -e GROUP_ID=1 \
 	 -e CONFIG_STORAGE_TOPIC=storage_config \
 	 -e OFFSET_STORAGE_TOPIC=storage_offset \
 	 -e STATUS_STORAGE_TOPIC=storage_status \
-	 -d debezium/connect:1.8
+	 -e KEY_CONVERTER=io.confluent.connect.avro.AvroConverter \
+     -e VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter \
+     -e CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL=http://$(LOCAL_IP):8081 \
+     -e CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://$(LOCAL_IP):8081 \
+	 -d debezium-local
 
 remove_debezium:
 	docker rm -f debezium kafka-ui kafka zookeeper
 
-create_debezium_connector:
+create_debezium_postgres_connector:
 	cd debezium
-	python create_connector.py
+	python create_connector.py postgres
+
+create_debezium_dw_connector:
+	cd debezium
+	python create_connector.py dw
 
 create_debezium_consumer:
 	cd debezium

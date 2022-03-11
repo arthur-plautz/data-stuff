@@ -1,0 +1,13 @@
+{
+    "name": "data_warehouse_connector",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "connection.url": "jdbc:postgresql://your-host:your-port/dw",
+        "connection.user": "your-user",
+        "connection.password": "your-pass",
+        "insert.mode": "update",
+        "batch.size": 5,
+        "auto.create": "true",
+        "topics": "northwind_cdc.public.us_states"
+    }
+}

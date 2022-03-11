@@ -8,6 +8,6 @@ export PG_SOURCE_HOST=0.0.0.0
 export PG_SOURCE_PORT=5435
 
 export DW_HOST=0.0.0.0
-export DW_PORT=5433
+export DW_PORT=5436
 
 export KAFKA_PORT=29092

@@ -104,12 +104,12 @@ make build_debezium
 
 Build Connector File with Secrets:
 ```bash
-make build_debezium_connector
+make build_debezium_postgres_connector
 ```
 
 Create a Connector:
 ```bash
-make create_debezium_connector
+make create_debezium_postgres_connector
 ```
 
 Create a Consumer:

@@ -135,3 +135,4 @@ database/mysql_data
 # connectors
 catalog/mysql-connector.json
 debezium/postgres-connector.json
+debezium/dw-connector.json

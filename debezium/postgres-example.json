@@ -2,8 +2,8 @@
     "name": "northwind_connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-        "database.hostname": "postgres",
-        "database.port": "5432",
+        "database.hostname": "your-host",
+        "database.port": "your-port",
         "database.user": "your-user",
         "database.password": "your-pass",
         "database.dbname": "northwind",

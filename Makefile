@@ -93,7 +93,7 @@ build_debezium: build_kafka
 	 -d debezium-local
 
 remove_debezium:
-	docker rm -f debezium kafka-ui kafka zookeeper
+	docker rm -f debezium kafka-ui schema-registry kafka zookeeper
 
 create_debezium_postgres_connector:
 	cd debezium

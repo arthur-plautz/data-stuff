@@ -93,6 +93,13 @@ Or just build Source Database:
 make build_postgres
 ```
 
+### Postgres DW Database
+
+Build the Data Warehouse Database:
+```bash
+make build_dw
+```
+
 ### Debezium Runner
 
 To run debezium you can run:
@@ -112,7 +119,22 @@ Create a Connector:
 make create_debezium_postgres_connector
 ```
 
-Create a Consumer:
+Now you can build a Data Warehouse Connector, to send your data:
+```bash
+make build_debezium_dw_connector
+```
+
+Create the Connector:
+```bash
+make create_debezium_dw_connector
+```
+Now if you go to your database, you will see the data.
+
+### Monitoring
+
+Too monitor your CDC application flow, you can access [Kafka UI](http://localhost:8089/).
+
+There's an example of a consumer written in python to watch `us_states` table:
 ```bash
 make create_debezium_consumer
 ```

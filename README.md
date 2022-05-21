@@ -15,8 +15,8 @@ Create a .env file:
 export MYSQL_SOURCE_USER=your-db-user
 export MYSQL_SOURCE_PASSWORD=your-db-password
 
-export POSTGRES_SOURCE_USER=your-db-user
-export POSTGRES_SOURCE_PASSWORD=your-db-password
+export PG_SOURCE_USER=your-db-user
+export PG_SOURCE_PASSWORD=your-db-password
 
 export DW_USER=your-db-user
 export DW_PASSWORD=your-db-password
@@ -138,3 +138,11 @@ There's an example of a consumer written in python to watch `us_states` table:
 ```bash
 make create_debezium_consumer
 ```
+
+## DBT
+
+Install `dbt-core` with `pip`:
+```bash
+pip install dbt-postgres
+```
+Documentation [dbt-site](https://docs.getdbt.com/reference/dbt_project.yml)
